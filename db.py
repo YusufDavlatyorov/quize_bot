@@ -43,31 +43,7 @@ class Options(Base):
     option_text=Column(String(250),nullable=False)
     is_correct=Column(Boolean,default=False)
 
-class QuizSession(Base):
-    __tablename__='quiz_sessions'
-    id=Column(Integer, primary_key=True) 
-    quiz_id=Column(Integer,ForeignKey('quizzes.id', ondelete='CASCADE'),index=True)
-    chat_id=Column(BigInteger,nullable=False)
-    started_at=Column(DateTime,default=datetime.now())
-    ended_at=Column(DateTime)
 
-class UserAnswer(Base):
-    __tablename__='user_answers'
-    id=Column(Integer, primary_key=True)
-    session_id=Column(Integer,ForeignKey('quiz_sessions.id'),index=True)
-    user_id=Column(Integer,ForeignKey('users.id'),index=True)
-    question_id=Column(Integer,ForeignKey('questions.id'),index=True)
-    option_id=Column(Integer,ForeignKey('options.id'),index=True)
-    answered_at=Column(DateTime,default=datetime.now())
-
-class Results(Base):
-    __tablename__='user_answers'
-    id=Column(Integer, primary_key=True)
-    session_id=Column(Integer,ForeignKey('quiz_sessions.id'),index=True)
-    user_id=Column(Integer,ForeignKey('users.id'),index=True)
-    score=Column(Integer,default=0)
-    total_question=Column(Integer)
-    finished_at=Column(DateTime,default=datetime.now())
 
 Base.metadata.create_all(engine)
 
